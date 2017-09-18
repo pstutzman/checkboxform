@@ -1,0 +1,95 @@
+<script src="/jquery.js"></script>
+ <style type='text/css'>
+ .error{ width: 400px; background: #DDD; color: red; font-weight: bold; padding: 4px;
+margin-top: 0; }
+ </style>
+
+ <h2>Library Survey</h2>
+
+ <noscript>
+ You need javascript enabled to complete this form.
+ </noscript>
+ <div id='surveydiv'>
+ <p>Please complete this form entirely. Thank you!</p>
+
+ <form id='form1' action="/share/week14/checkbox-form_proc.php" method="post">
+ <label for="id">Please enter your 4-digit student id:</label><br />
+ <input type="text" name="id" id="id"><br />
+ <div id='iderr' class='error'>Student ID is required.</div>
+
+ <br />
+ Are you registered full or part time?<br />
+ <input type="radio" name="reg" id="reg_full" value="reg_full"> Full Time<br />
+ <input type="radio" name="reg" id="reg_part" value="reg_part"> Part Time<br />
+ <div id='regerr' class='error'>This response is required.</div>
+
+ <br />
+ <b>Please choose between 1 and 3 items you'd like to see in the library at GCC:</b><br />
+ <input type='checkbox' id='01ccs' name='lib[]' value='01ccs'>
+ <label for='01ccs'>Cafe/Coffee Stand</label><br />
+ <input type='checkbox' id='02agsr' name='lib[]' value='02agsr'>
+ <label for='02agsr'>Additional Group Study Rooms</label><br />
+ <input type='checkbox' id='03nqcwa' name='lib[]' value='03nqcwa'>
+ <label for='03nqcwa'>Non-Quiet Collaborative Work Areas</label><br />
+ <input type='checkbox' id='04aqss' name='lib[]' value='04aqss'>
+ <label for='04aqss'>Additional Quiet Study Space</label><br />
+ <input type='checkbox' id='05mb' name='lib[]' value='05mb'>
+ <label for='05mb'>Mini-Bookstore (pens, paper, headphones for sale).</label><br />
+ <input type='checkbox' id='06bil' name=lib[]' value='06bil'>
+ <label for='06bil'>Bathrooms Inside the Library</label><br />
+ <input type='checkbox' id='07lsss' name=lib[]' value='07lsss'>
+ <label for='07lsss'>Lockers/Secure Storage Space</label><br />
+ <div id='liberr' class='error'>Please select between 1 and 3 items</div><p>
+
+ <div id='submit_area'>
+ <input id="sub1" value="Check Form" type="submit"><input type="reset">
+ </div>
+ </p>
+ </form>
+ </div>
+
+ <script>
+
+
+
+ $('#form1').submit(checkVals); // add submit listener to form
+ $('#id').focus(); // focus on the first form field
+ $('.error').hide(); //hide all error messages
+
+ function checkVals() {
+ // put your code here.
+ var errors = 0
+ $('.error').hide();
+
+
+
+ //check id field
+
+ var studid = $('#id').val();
+ //alert(studid);
+ if (! studid.match(/^\d{4}$/)){
+ $('#iderr').show();
+ errors++;
+ }
+
+
+ //check radio buttons
+ var radchecked = $('input[name=reg]:checked').size();
+ if(radchecked != 1) {
+ $('#regerr').show();
+ errors++;
+ }
+
+ //check radio boxes
+ var boxchecked = $('input[type=checkbox]:checked').size()
+ if(boxchecked <1 || boxchecked >3) {
+ $('#liberr').show();
+ errors++;
+
+ }
+ if(errors) {
+ return false; // this line causes form not to submit
+ }
+ }
+
+</script>
